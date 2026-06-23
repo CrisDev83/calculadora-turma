@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]          # dispara a cada push na branch main
+  workflow_dispatch:           # permite rodar manualmente pelo GitHub
+
+permissions:
+  contents: write              # necessário para publicar no gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+        working-directory: frontend
+
+      - name: Build de produção (Vite)
+        run: npm run build
+        working-directory: frontend
+
+      - name: Publicar no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: frontend/dist

@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+
+# Build do Vite
+frontend/dist/
+frontend/.vite/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SO
+.DS_Store
+Thumbs.db
